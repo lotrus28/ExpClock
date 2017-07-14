@@ -8,6 +8,9 @@ print(args)
 p_samples = args[1]
 p_subjects = args[2]
 out_folder = args[3]
+if (substr(out_folder,nchar(out_folder),nchar(out_folder)) != '/'){
+  out_folder = paste0(out_folder,'/')
+}
 
 # p_samples = 'samples_from_Brain-Hippocampus.txt'
 # p_subjects = 'subj_sample_annot.txt'
