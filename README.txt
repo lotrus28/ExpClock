@@ -1,13 +1,13 @@
 ╔═══════════════════════════════════════════════════════════════════════════════════════════════╗
-║ 																								║
-║ Minor errors might be present. Pay extra attention to passed arguments and hardcoded paths!	║
-║																								║
-║ To work with scripts you need to download these files from GTEx site:							║
-║ - GTEx_Analysis_v6p_RNA-seq_RNA-SeQCv1.1.8_gene_rpkm.7z										║
-║ - GTEx_Data_V6_Annotations_SampleAttributesDS.txt												║
-║ - GTEx_Data_V6_Annotations_SubjectPhenotypesDS.txt											║
-║																								║
-║ Data division into testing and training sets is not supported yet.							║
+║
+║ Minor errors might be present. Pay extra attention to passed arguments and hardcoded paths!
+║
+║ To work with scripts you need to download these files from GTEx site:
+║ - GTEx_Analysis_v6p_RNA-seq_RNA-SeQCv1.1.8_gene_rpkm.7z
+║ - GTEx_Data_V6_Annotations_SampleAttributesDS.txt
+║ - GTEx_Data_V6_Annotations_SubjectPhenotypesDS.txt
+║
+║ Data division into testing and training sets is not supported yet.
 ╚═══════════════════════════════════════════════════════════════════════════════════════════════╝
 
 = get_sign_features.sh
