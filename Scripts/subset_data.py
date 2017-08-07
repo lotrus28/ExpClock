@@ -7,9 +7,6 @@ rpkm_path = sys.argv[1]
 global out_path
 out_path = sys.argv[2]
 
-if not(out_path[-1] == '/'):
-    out_path += '/'
-
 def truncate_rpkm_table(row_start, row_end, col_start, col_end, rpkm_path):
 
     trunc_data = 'truncated_rpkm_{}-{}x{}-{}.txt'.format(str(row_start), str(row_end),str(col_start), str(col_end))

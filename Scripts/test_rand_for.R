@@ -2,11 +2,35 @@ library(randomForest)
 
 set.seed(1238)
 
+sep_train_and_test <- function(df_tissue){
+  ages = seq(25, 95, by=10)
+  train_indices = c()
+  test_indices = c()
+  for (age in ages){
+    # List of column indices with this age
+    temp = colnames(df_tissue)[which(df_tissue['Age',] == age)]
+    
+    if (length(temp) == 1) {
+      train_indices = c (train_indices, temp)
+    } else {
+      train_indices = c(train_indices, temp[1:(length(temp)*0.8)])
+      test_indices = c(test_indices, temp[((length(temp)*0.8)+1):length(temp)])
+    }
+  }
+  train_indices = train_indices[!is.na(train_indices)]
+  test_indices = test_indices[!is.na(test_indices)]
+  return(list(train = train_indices, test = test_indices))
+}
+
+
 args = commandArgs(trailingOnly=TRUE)
 print(args)
 p_samples = args[1]
 p_metadata = args[2]
 p_out = args[3]
+if (substr(p_out,nchar(p_out),nchar(p_out)) != '/'){
+  p_out = paste0(p_out,'/')
+}
 
 # p_samples = './tissue_samples/'
 # p_metadata = './subj_sample_annot.txt'
@@ -21,16 +45,8 @@ sign_feats['RSq Tent'] = NA
 
 subj_data = read.table(p_metadata, sep = '\t', header = 1, row.names = 1, stringsAsFactors = F)
 
-# Turn granular age labels into actual nubers
-subj_data[subj_data == '20-29'] = 25
-subj_data[subj_data == '30-39'] = 35
-subj_data[subj_data == '40-49'] = 45
-subj_data[subj_data == '50-59'] = 55
-subj_data[subj_data == '60-69'] = 65
-subj_data[subj_data == '70-79'] = 75
-subj_data[subj_data == '80-89'] = 85
-subj_data[subj_data == '90-99'] = 95
-subj_data['Age'] = as.numeric(subj_data[['Age']])
+# Turn granular age labels into actual numbers
+subj_data['Age'] = as.numeric(paste0(substr(subj_data[['Age']], 1, 1),'5'))
 
 for (tissue in rownames(sign_feats)) {
   print(tissue)
@@ -40,9 +56,10 @@ for (tissue in rownames(sign_feats)) {
   c_formula = paste0('Age ~ ', gsub(', ',' + ', conf))
   t_formula = paste0('Age ~ ', gsub(', ',' + ', conf), ' + ', gsub(', ',' + ', tent))
   
-  df = read.table(paste0(p_samples, 'samples_from_',tissue,'.txt'), header = 1, row.names = 1, stringsAsFactors = F)
-  colnames(df) = gsub('\\.','-',colnames(df))
-  df = df[c(strsplit(conf, ', ')[[1]], strsplit(tent, ', ')[[1]]),-1]
+  df = read.table(paste0(p_samples, 'samples_from_',tissue,'.txt'), header = 1, row.names = 1, stringsAsFactors = F, check.names=F)
+  df['Description'] = NULL
+  indices = sep_train_and_test(df)
+  df = df[c(strsplit(conf, ', ')[[1]], strsplit(tent, ', ')[[1]]),indices[['test']]]
   df['Age',] = subj_data[colnames(df),'Age']
   
   df = data.frame(t(df))
