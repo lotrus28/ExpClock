@@ -62,15 +62,16 @@ for (tissue in rownames(sign_feats)) {
   
   df = read.table(paste0(p_samples, 'samples_from_',tissue,'.txt'), header = 1, row.names = 1, stringsAsFactors = F, check.names=F)
   df['Description'] = NULL
-  indices = sep_train_and_test(df)
-  df = df[c(strsplit(conf, ', ')[[1]], strsplit(tent, ', ')[[1]]),indices[['test']]]
   df['Age',] = subj_data[colnames(df),'Age']
+  indices = sep_train_and_test(df)
+  temp = c(strsplit(conf, ', ')[[1]], strsplit(tent, ', ')[[1]],'Age')
+  df = df[temp,indices[['test']]]
   
   df = data.frame(t(df))
   # df = transform(df, class=as.numeric(as.character(df)))
   
   if (!is.na(sign_feats[tissue,1])) {
-    df_to_for = df[,c(strsplit(conf, ', ')[[1]], 'Age')]
+    df_to_for = df[c(strsplit(conf, ', ')[[1]], 'Age')]
     z = randomForest(Age ~ ., data = df_to_for, ntrees = 500)
     sign_feats[tissue, 'RSq Conf'] = mean(z$rsq)
     sign_feats[tissue, 'RMSE Conf'] = mean(z$mse)**0.5
