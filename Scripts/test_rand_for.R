@@ -28,6 +28,7 @@ print(args)
 p_samples = args[1]
 p_metadata = args[2]
 p_out = args[3]
+p_sig_feat = args[4]
 if (substr(p_out,nchar(p_out),nchar(p_out)) != '/'){
   p_out = paste0(p_out,'/')
 }
@@ -36,7 +37,7 @@ if (substr(p_out,nchar(p_out),nchar(p_out)) != '/'){
 # p_metadata = './subj_sample_annot.txt'
 # p_out = './
 
-sign_feats = read.table('significant_features.txt', sep = '\t', stringsAsFactors = F,
+sign_feats = read.table(p_sig_feat, sep = '\t', stringsAsFactors = F,
                         col.names = c('Tissue', 'Confirmed', 'Tentative'), row.names = 1)
 sign_feats['RMSE Conf'] = NA
 sign_feats['RSq Conf'] = NA
