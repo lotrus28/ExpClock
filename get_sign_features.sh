@@ -23,6 +23,7 @@ declare -A nodes
 # nodes+=( [0]="node01" [1]="node03" [2]="node07" [3]="node08" [4]="node12" [5]="node15" )
 nodes+=( [0]="node6.net0.pyxis.ripcm.com" [1]="node8.net0.pyxis.ripcm.com" [2]="node9.net0.pyxis.ripcm.com" [3]="node4.net0.pyxis.ripcm.com" [4]="node11.net0.pyxis.ripcm.com" [5]="node12.net0.pyxis.ripcm.com" )
 jobID=0
+node=${nodes[$(($jobID % 6))]}
 if [ ! -f $tissue_folder/significant_features.txt ]; then
 	for f in $tissue_folder/*
 	do
