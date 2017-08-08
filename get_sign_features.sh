@@ -41,5 +41,5 @@ last_job=$(($jobID - 1))
 echo "Loop over"
 
 # echo 'R CMD BATCH ''"--args '"$tissue_folder ./subj_sample_annot.txt ./"'" '"$SCRIPT_FOLDER/test_rand_for.R" | qsub -N test_forest -l nodes=node12 -hold_jid TisBor$jobID
-echo 'R CMD BATCH ''"--args '"$tissue_folder ./subj_sample_annot.txt ./ $tissue_folder/significant_feature.txt"'" '"$SCRIPT_FOLDER/test_rand_for.R" | qsub -N test_forest -hold_jid TisBor$last_job -cwd -l hostname=$node -r yes
+echo 'R CMD BATCH ''"--args '"$tissue_folder ./subj_sample_annot.txt ./ $tissue_folder/significant_features.txt"'" '"$SCRIPT_FOLDER/test_rand_for.R" | qsub -N test_forest -hold_jid TisBor$last_job -cwd -l hostname=$node -r yes
 echo 'Over'
