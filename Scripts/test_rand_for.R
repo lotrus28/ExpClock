@@ -32,6 +32,9 @@ p_sig_feat = args[4]
 if (substr(p_out,nchar(p_out),nchar(p_out)) != '/'){
   p_out = paste0(p_out,'/')
 }
+if (substr(p_samples,nchar(p_samples),nchar(p_samples)) != '/'){
+  p_samples = paste0(p_samples,'/')
+}
 
 # p_samples = './tissue_samples/'
 # p_metadata = './subj_sample_annot.txt'
