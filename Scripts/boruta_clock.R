@@ -22,7 +22,7 @@ sep_train_and_test <- function(df_tissue){
   return(list(train = train_indices, test = test_indices))
 }
 
-set.seed(124)
+set.seed(1245)
 
 args = commandArgs(trailingOnly=TRUE)
 print(args)
@@ -40,6 +40,7 @@ if (substr(out_folder,nchar(out_folder),nchar(out_folder)) != '/'){
 # Read subject metadata: age and sex
 # Using `row.names = NULL` due to some strange bug in R CMD BATCH
 df = read.table(p_samples, sep = '\t', header = 1, row.names = NULL, stringsAsFactors = F, check.names=F)
+colnames(df) = c('Name','Description', colnames(df)[3:length(colnames(df))])
 rownames(df) = df[['Name']]
 df['Name'] = NULL
 df$Description <- NULL
